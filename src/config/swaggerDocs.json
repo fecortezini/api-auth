@@ -15,6 +15,100 @@
         }
     ],
     "paths": {
+        "/users/{id}": {
+            "get": {
+                "summary": "Listagem de um usuário especifico.",
+                "description": "Essa rota é responsavel por listar um usuário especifico contido no banco de dados da aplicação.",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Buscar usuário através do seu Id.",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Have no user"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Alterar um usuário especifico.",
+                "description": "Essa rota é responsavel por alterar um usuário especifico contido no banco de dados da aplicação.",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Buscar usuário através do seu Id.",
+                        "required": "true"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "user": "admin",
+                                        "pass": "admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário atualizado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar um usuário especifico.",
+                "description": "Essa rota é responsavel por deletar um usuário especifico contido no banco de dados da aplicação.",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Buscar usuário através do seu Id.",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário deletado."
+                    }
+                }
+            }
+        },
         "/users": {
             "post": {
                 "summary": "Cadastro de usuários",
@@ -70,10 +164,10 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
+                                    "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/User"
-                                    }                                    
+                                    }
                                 }
                             }
                         }
@@ -98,14 +192,14 @@
                     }
                 }
             }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
         }
-    },
-    "securitySchemes": {
-        "bearerAuth": {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT"
-        }
-    }
+    }    
 
 }

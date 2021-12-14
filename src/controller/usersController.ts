@@ -10,10 +10,10 @@ class UsersController {
         const id = req.params.id;
         const result = await User.findOne({ where: { id: id}});
         if(!result){
-            res.status(204);
+            res.status(204).send();
             return;
         } 
-        return res.json(result).status(201);
+        return res.json(result).status(200);
     }    
     async postDataDb(req: Request, res: Response){
         const data = req.body;
