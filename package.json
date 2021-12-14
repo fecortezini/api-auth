@@ -13,7 +13,7 @@
     "uuidv4": "^6.2.12"
   },
   "scripts": {
-    "start": "nodemon ./index.ts --proxy-config proxyconfig.json"
+    "start": "nodemon ./index.ts --proxy-config ./src/config/proxyconfig.json"
   },
   "devDependencies": {
     "ts-node-dev": "^1.1.8",
