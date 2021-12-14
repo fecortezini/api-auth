@@ -16,7 +16,13 @@ class UsersController {
         return res.json(result).status(201);
     }    
     async postDataDb(req: Request, res: Response){
-        await User.create(req.body);
+        const data = req.body;
+        const result = await User.findOne({ where : { user: data.user }});
+        if(result){
+            res.status(400).send({msg: "Usuário ja existe."});
+            return;
+        }
+        await User.create(data);
         return res.status(201).send({msg: "Usuário cadastrado."});
     }
     async postDataLogin(req: Request, res: Response){

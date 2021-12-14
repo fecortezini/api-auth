@@ -1,0 +1,111 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de manipulação de usuários.",
+        "description": "API desenvolvida para fins didáticos.",
+        "contact": {
+            "email": "felipemasterx21@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "Url base da API"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "summary": "Cadastro de usuários",
+                "description": "Essa rota é responsavel por cadastrar usuários no banco de dados da aplicação.",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "user": "admin",
+                                        "pass": "admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "User already exists."
+                    },
+                    "201": {
+                        "description": "User created.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Listagem de usuários.",
+                "description": "Essa rota é responsavel por listar todos os usuários contidos no banco de dados da aplicação.",
+                "tags": ["Users"],
+                "requestBody": {
+
+                },
+                "responses": {
+                    "204": {
+                        "description": "Have no users"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "user": {
+                        "type": "string"
+                    },
+                    "pass": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "securitySchemes": {
+        "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+        }
+    }
+
+}

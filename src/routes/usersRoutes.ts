@@ -12,7 +12,6 @@ usersRouter.post('/', UsersController.postDataDb)
 usersRouter.post('/auth', UsersController.postDataLogin)
 
 usersRouter.put('/:id', authMiddleware, UsersController.putDataDb)
-
 usersRouter.delete('/:id', authMiddleware, UsersController.delDataDb)
 
 export default usersRouter;
