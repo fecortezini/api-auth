@@ -77,15 +77,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuário atualizado.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
+                        "description": "Usuário atualizado."
                     }
                 }
             },
@@ -174,6 +166,47 @@
                     }
                 }
             }
+        },
+        "/users/auth": {
+            "post": {
+                "summary": "Fazer login no sistema.",
+                "description": "Essa rota é responsavel por logar no sistema.",
+                "tags": ["Authenticate"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "user": "admin",
+                                        "pass": "admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Invalid credentials."
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",                                    
+                                    "$ref": "#/components/schemas/Authenticate"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
     },
     "components": {
@@ -188,6 +221,17 @@
                         "type": "string"
                     },
                     "pass": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Authenticate": {
+                "type": "object",
+                "properties": {
+                    "msg": {
+                        "type": "string"
+                    },
+                    "token": {
                         "type": "string"
                     }
                 }
