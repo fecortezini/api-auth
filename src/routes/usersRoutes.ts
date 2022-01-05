@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/auth"
 
 const usersRouter = Router();
 
-usersRouter.get('/', UsersController.getAllDataDb)
+usersRouter.get('/', authMiddleware, UsersController.getAllDataDb)
 usersRouter.get('/:id', UsersController.getDataDb)
 
 usersRouter.post('/', UsersController.postDataDb)

@@ -43,6 +43,7 @@ class UsersController {
             msg: "Autenticado",
             token: token
         })
+        
     }
     async getAllDataDb(_req: Request, res: Response){
         const data = await User.findAll();
@@ -55,6 +56,13 @@ class UsersController {
     async putDataDb(req: Request, res: Response){
         const id = req.params.id;
         const user = await User.findOne({ where: { id: id}});
+        if(!id){
+            return res.status(400).send({msg: "Id do usuário nao foi passado."})
+        }
+        if(!user) {
+            return res.status(400)
+            .send({msg: "Usuario nao existe."})
+        }
         user.user = req.body.user;
         user.pass = req.body.pass;
         await user.save();
@@ -64,7 +72,8 @@ class UsersController {
         const id = req.params.id;
         await User.destroy({ where: { id: id}})
         return res.status(200).send({msg: "Usuário deletado."})
-    }    
+    }
+    
 }
 
 export default new UsersController();
